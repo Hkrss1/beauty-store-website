@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeautyHub - Premium Cosmetics & Beauty Products</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>">
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💄</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        /* Timer Ticker Styles */
+        .timer-ticker {
+            background: linear-gradient(90deg, #ff6b6b, #ee5a24, #ff6b6b);
+            background-size: 200% 100%;
+            animation: gradient-shift 2s ease-in-out infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .flash-message {
+            animation: flash 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes flash {
+            0%, 50% { opacity: 1; transform: scale(1); }
+            25%, 75% { opacity: 0.8; transform: scale(1.05); }
+        }
+        
+        .timer-number {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse-glow 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+            to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.4); }
+        }
+        
+        .close-timer {
+            transition: all 0.3s ease;
+        }
+        
+        .close-timer:hover {
+            transform: scale(1.2);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .product-card:hover::before {
+            left: 100%;
+        }
+        
+
+        
+        .offer-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .offer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .offer-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s;
+        }
+        
+        .offer-card:hover::before {
+            transform: scale(1);
+        }
+        
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .slide-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .slide-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-text {
+                font-size: 2.5rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-text {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Sparkles and Flashy Effects */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkle 1.5s linear infinite;
+        }
+        
+        @keyframes sparkle {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .flashy-offer-modal {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            animation: flashy-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes flashy-glow {
+            0% {
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            }
+            100% {
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.9), 0 0 70px rgba(255, 215, 0, 0.4);
+            }
+        }
+        
+        .offer-price {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #ffd700, #ff6b6b);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 2s ease-in-out infinite;
+        }
+        
+        .offer-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd700);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transform: rotate(15deg);
+            animation: bounce 1s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: rotate(15deg) translateY(0); }
+            50% { transform: rotate(15deg) translateY(-5px); }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 3s linear infinite;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Timer Ticker -->
+    <div id="timerTicker" class="timer-ticker text-white py-3 px-4 relative z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <!-- Flash Icon -->
+                <div class="flash-message">
+                    <i class="fas fa-fire text-2xl"></i>
+                </div>
+                
+                <!-- Flash Message -->
+                <div class="flash-message">
+                    <span class="font-bold text-lg">🔥 FLASH SALE! 🔥</span>
+                </div>
+                
+                <!-- Offer Message -->
+                <div class="hidden md:block">
+                    <span class="font-semibold">Buy products worth ₹5000 for just ₹500!</span>
+                </div>
+                
+                <!-- Timer -->
+                <div class="flex items-center space-x-2">
+                    <span class="font-semibold text-sm">Ends in:</span>
+                    <div class="flex space-x-1">
+                        <div class="timer-number px-3 py-1 rounded-lg">
+                            <span id="timerMinutes" class="font-bold text-xl">10</span>
+                        </div>
+                        <span class="font-bold text-xl">:</span>
+                        <div class="timer-number px-3 py-1 rounded-lg">
+                            <span id="timerSeconds" class="font-bold text-xl">00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Action Button -->
+            <div class="flex items-center space-x-3">
+                <button class="bg-white text-red-600 px-4 py-2 rounded-full font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-shopping-cart mr-2"></i>Shop Now
+                </button>
+                <button id="closeTimerBtn" class="close-timer text-white hover:text-gray-200 px-2 py-1 rounded-full">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-pink-600 flex items-center">
+                        <i class="fas fa-spa mr-2 text-pink-500"></i>
+                        BeautyHub
+                    </h1>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-pink-600 font-medium transition-colors duration-300 flex items-center">
+                        <i class="fas fa-th-large mr-2"></i>Categories
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-pink-600 font-medium transition-colors duration-300 flex items-center">
+                        <i class="fas fa-tags mr-2"></i>Brands
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-pink-600 font-medium transition-colors duration-300 flex items-center">
+                        <i class="fas fa-star mr-2"></i>New Launches
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-pink-600 font-medium transition-colors duration-300 flex items-center">
+                        <i class="fas fa-lightbulb mr-2"></i>Beauty Advice
+                    </a>
+                </nav>
+
+                <!-- Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-lg mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Search for products..." 
+                               class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- Desktop User Actions -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-pink-600 transition-colors duration-300 relative">
+                        <i class="fas fa-heart text-xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-pink-600 transition-colors duration-300 relative">
+                        <i class="fas fa-shopping-bag text-xl"></i>
+                        <span class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">2</span>
+                    </a>
+                    <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-2 rounded-full hover:from-pink-600 hover:to-purple-700 font-medium transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-user mr-2"></i>Sign In
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-700 hover:text-pink-600 transition-colors duration-300">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden fixed top-16 left-0 w-full h-screen bg-white shadow-lg z-40">
+            <div class="p-6 space-y-6">
+                <!-- Mobile Search -->
+                <div class="relative">
+                    <input type="text" placeholder="Search for products..." 
+                           class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-500">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+
+                <!-- Mobile Navigation -->
+                <nav class="space-y-4">
+                    <a href="#" class="block text-gray-700 hover:text-pink-600 font-medium transition-colors duration-300 flex items-center py-2">
+                        <i class="fas fa-th-large mr-3 w-5"></i>Categories
+                    </a>
+                    <a href="#" class="block text-gray-700 hover:text-pink-600 font-medium transition-colors duration-300 flex items-center py-2">
+                        <i class="fas fa-tags mr-3 w-5"></i>Brands
+                    </a>
+                    <a href="#" class="block text-gray-700 hover:text-pink-600 font-medium transition-colors duration-300 flex items-center py-2">
+                        <i class="fas fa-star mr-3 w-5"></i>New Launches
+                    </a>
+                    <a href="#" class="block text-gray-700 hover:text-pink-600 font-medium transition-colors duration-300 flex items-center py-2">
+                        <i class="fas fa-lightbulb mr-3 w-5"></i>Beauty Advice
+                    </a>
+                </nav>
+
+                <!-- Mobile User Actions -->
+                <div class="space-y-4 pt-4 border-t border-gray-200">
+                    <a href="#" class="block text-gray-700 hover:text-pink-600 transition-colors duration-300 flex items-center py-2">
+                        <i class="fas fa-heart mr-3 w-5"></i>Wishlist (3)
+                    </a>
+                    <a href="#" class="block text-gray-700 hover:text-pink-600 transition-colors duration-300 flex items-center py-2">
+                        <i class="fas fa-shopping-bag mr-3 w-5"></i>Cart (2)
+                    </a>
+                    <button class="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 rounded-full hover:from-pink-600 hover:to-purple-700 font-medium transition-all duration-300">
+                        <i class="fas fa-user mr-2"></i>Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20 relative overflow-hidden">
+        <!-- Floating Elements -->
+        <div class="absolute top-10 left-10 floating-animation">
+            <i class="fas fa-sparkles text-4xl opacity-20"></i>
+        </div>
+        <div class="absolute top-20 right-20 floating-animation" style="animation-delay: 1s;">
+            <i class="fas fa-heart text-3xl opacity-20"></i>
+        </div>
+        <div class="absolute bottom-20 left-20 floating-animation" style="animation-delay: 2s;">
+            <i class="fas fa-star text-2xl opacity-20"></i>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="slide-in">
+                <h2 class="hero-text text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-shadow">
+                    Discover Your 
+                    <span class="bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">Perfect Beauty</span>
+                </h2>
+                <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto leading-relaxed">
+                    Shop the latest beauty products with exclusive offers and personalized recommendations
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="bg-white text-pink-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg pulse-animation">
+                        <i class="fas fa-shopping-bag mr-2"></i>Shop Now
+                    </button>
+                    <button class="glass-effect text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-pink-600 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-play mr-2"></i>Watch Video
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">10K+</div>
+                    <div class="text-sm opacity-80">Happy Customers</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">500+</div>
+                    <div class="text-sm opacity-80">Products</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">50+</div>
+                    <div class="text-sm opacity-80">Brands</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">24/7</div>
+                    <div class="text-sm opacity-80">Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Featured Products -->
+    <section class="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8 slide-in">
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Discover our handpicked collection of premium beauty products</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 product-grid">
+                <!-- Product Card 1 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹899')">
+                    <div class="relative">
+                        <img src="images/Luxury Matte Lipstick.png" 
+                             alt="Lipstick" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            -25%
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(128)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Luxury Matte Lipstick</h4>
+                        <p class="text-gray-600 text-sm mb-4">Long-lasting, creamy formula with intense color payoff</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹899</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹1199</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹1299')">
+                    <div class="relative">
+                        <img src="images/Perfect Coverage Foundation.png" 
+                             alt="Foundation" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            New
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(89)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Perfect Coverage Foundation</h4>
+                        <p class="text-gray-600 text-sm mb-4">24-hour wear with natural, flawless finish</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹1299</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹799')">
+                    <div class="relative">
+                        <img src="images/Vutamin C Serum.png" 
+                             alt="Serum" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            Bestseller
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(256)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Vitamin C Serum</h4>
+                        <p class="text-gray-600 text-sm mb-4">Brightening & anti-aging powerhouse formula</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹799</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹999</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹2499')">
+                    <div class="relative">
+                        <img src="images/Floral pradise perfume.png" 
+                             alt="Perfume" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            Limited
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(167)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Floral Paradise Perfume</h4>
+                        <p class="text-gray-600 text-sm mb-4">Elegant & long-lasting signature scent</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹2499</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹2999</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 5 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹1599')">
+                    <div class="relative">
+                        <img src="images/Pro Eyeshadow Palette.png" 
+                             alt="Eyeshadow Palette" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            Hot
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(342)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Pro Eyeshadow Palette</h4>
+                        <p class="text-gray-600 text-sm mb-4">18 highly pigmented shades for endless looks</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹1599</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹1999</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 6 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹699')">
+                    <div class="relative">
+                        <img src="images/Volumizing Mascara.png" 
+                             alt="Mascara" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            -30%
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(198)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Volumizing Mascara</h4>
+                        <p class="text-gray-600 text-sm mb-4">Lengthening & volumizing formula for dramatic lashes</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹699</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹999</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 7 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹899')">
+                    <div class="relative">
+                        <img src="images/Hydrating Face Cream.png" 
+                             alt="Face Cream" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            Organic
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(276)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Hydrating Face Cream</h4>
+                        <p class="text-gray-600 text-sm mb-4">24-hour moisture with hyaluronic acid</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹899</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹1299</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 8 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹599')">
+                    <div class="relative">
+                        <img src="images/Silk Blush Powder.png" 
+                             alt="Blush" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-rose-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            Trending
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(189)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Silk Blush Powder</h4>
+                        <p class="text-gray-600 text-sm mb-4">Silky smooth texture with buildable color</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹599</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹799</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 9 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹449')">
+                    <div class="relative">
+                        <img src="images/Volumizing Mascara.png" 
+                             alt="Eyeliner" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            Waterproof
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(234)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Liquid Eyeliner</h4>
+                        <p class="text-gray-600 text-sm mb-4">Long-lasting, smudge-proof precision liner</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹449</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹649</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 10 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹399')">
+                    <div class="relative">
+                        <img src="images/Full Coverage Concealer.png" 
+                             alt="Concealer" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            -40%
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(156)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Full Coverage Concealer</h4>
+                        <p class="text-gray-600 text-sm mb-4">Creamy formula that covers dark circles & blemishes</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹399</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹699</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 11 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹549')">
+                    <div class="relative">
+                        <img src="images/Hydrating Face Cream.png" 
+                             alt="Sunscreen" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            SPF 50+
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(298)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Broad Spectrum Sunscreen</h4>
+                        <p class="text-gray-600 text-sm mb-4">Lightweight, non-greasy protection for all skin types</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹549</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹799</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 12 -->
+                <div class="bg-white rounded-2xl shadow-lg product-card transition-all duration-300 cursor-pointer overflow-hidden" onclick="showPriceModal('₹349')">
+                    <div class="relative">
+                        <img src="images/Luxury Matte Lipstick.png" 
+                             alt="Lip Gloss" class="w-full h-72 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-fuchsia-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            Shimmer
+                        </div>
+                        <div class="absolute top-4 left-4 bg-white bg-opacity-90 rounded-full p-2 hover:bg-opacity-100 transition-all duration-300">
+                            <i class="fas fa-heart text-gray-600 hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(178)</span>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg mb-2">Glossy Lip Shimmer</h4>
+                        <p class="text-gray-600 text-sm mb-4">High-shine finish with subtle shimmer particles</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-pink-600">₹349</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">₹499</span>
+                            </div>
+                            <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-shopping-cart mr-1"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View All Products Button -->
+            <div class="text-center mt-12">
+                <button class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-eye mr-2"></i>View All Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 slide-in">
+                <h3 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Special Offers</h3>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Unlock amazing deals and save big on your favorite beauty products</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="offer-card bg-gradient-to-br from-pink-500 to-purple-600 text-white p-8 rounded-2xl text-center relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-white bg-opacity-20 rounded-full px-3 py-1 text-sm font-bold">
+                        Limited Time
+                    </div>
+                    <div class="text-6xl mb-4">💄</div>
+                    <h4 class="text-2xl font-bold mb-3">FLAT 25% OFF!</h4>
+                    <p class="mb-6 text-lg opacity-90">On all makeup products</p>
+                    <div class="mb-6">
+                        <div class="text-3xl font-bold mb-2">Ends In:</div>
+                        <div class="flex justify-center space-x-2">
+                            <div class="bg-white bg-opacity-20 rounded-lg px-3 py-2">
+                                <div class="text-2xl font-bold">02</div>
+                                <div class="text-xs">Days</div>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg px-3 py-2">
+                                <div class="text-2xl font-bold">18</div>
+                                <div class="text-xs">Hours</div>
+                            </div>
+                            <div class="bg-white bg-opacity-20 rounded-lg px-3 py-2">
+                                <div class="text-2xl font-bold">45</div>
+                                <div class="text-xs">Mins</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="bg-white text-pink-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-shopping-bag mr-2"></i>Shop Now
+                    </button>
+                </div>
+                
+                <div class="offer-card bg-gradient-to-br from-blue-500 to-green-600 text-white p-8 rounded-2xl text-center relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-white bg-opacity-20 rounded-full px-3 py-1 text-sm font-bold">
+                        Popular
+                    </div>
+                    <div class="text-6xl mb-4">🧴</div>
+                    <h4 class="text-2xl font-bold mb-3">Buy 2 Get 1 Free</h4>
+                    <p class="mb-6 text-lg opacity-90">On skincare essentials</p>
+                    <div class="mb-6">
+                        <div class="text-sm opacity-80 mb-2">Valid on:</div>
+                        <div class="space-y-1 text-sm">
+                            <div>• Cleansers & Toners</div>
+                            <div>• Serums & Moisturizers</div>
+                            <div>• Face Masks & Treatments</div>
+                        </div>
+                    </div>
+                    <button class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-gift mr-2"></i>Claim Offer
+                    </button>
+                </div>
+                
+                <div class="offer-card bg-gradient-to-br from-orange-500 to-red-600 text-white p-8 rounded-2xl text-center relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-white bg-opacity-20 rounded-full px-3 py-1 text-sm font-bold">
+                        Always On
+                    </div>
+                    <div class="text-6xl mb-4">🚚</div>
+                    <h4 class="text-2xl font-bold mb-3">Free Delivery</h4>
+                    <p class="mb-6 text-lg opacity-90">On orders above ₹999</p>
+                    <div class="mb-6">
+                        <div class="text-sm opacity-80 mb-2">What's included:</div>
+                        <div class="space-y-1 text-sm">
+                            <div>• Express Delivery</div>
+                            <div>• Secure Packaging</div>
+                            <div>• Real-time Tracking</div>
+                        </div>
+                    </div>
+                    <button class="bg-white text-orange-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-truck mr-2"></i>Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">BeautyHub</h4>
+                    <p class="text-gray-400">Your one-stop destination for all beauty needs.</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Quick Links</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">About Us</a></li>
+                        <li><a href="#" class="hover:text-white">Contact</a></li>
+                        <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Customer Service</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white">Track Order</a></li>
+                        <li><a href="#" class="hover:text-white">Returns & Refunds</a></li>
+                        <li><a href="#" class="hover:text-white">Size Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Connect With Us</h5>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 BeautyHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Flashy Offer Modal -->
+    <div id="priceModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="flashy-offer-modal rounded-2xl p-8 max-w-lg w-full mx-4 text-center relative overflow-hidden">
+            <!-- Sparkles -->
+            <div class="sparkle" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+            <div class="sparkle" style="top: 30%; right: 15%; animation-delay: 0.3s;"></div>
+            <div class="sparkle" style="top: 60%; left: 20%; animation-delay: 0.6s;"></div>
+            <div class="sparkle" style="top: 70%; right: 25%; animation-delay: 0.9s;"></div>
+            <div class="sparkle" style="top: 40%; left: 50%; animation-delay: 1.2s;"></div>
+            
+            <!-- Offer Badge -->
+            <div class="offer-badge">EXCLUSIVE!</div>
+            
+            <!-- Close Button -->
+            <button onclick="closePriceModal()" class="absolute top-4 right-4 text-white hover:text-yellow-300 text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <!-- Content -->
+            <div class="text-white">
+                <div class="text-6xl mb-4">🎉</div>
+                <h3 class="text-3xl font-bold mb-4">SPECIAL OFFER!</h3>
+                <p class="text-lg mb-6">You've unlocked an exclusive discount!</p>
+                
+                <div class="mb-6">
+                    <div class="text-sm text-yellow-300 mb-2">Original Price</div>
+                    <div class="text-xl line-through opacity-75">₹<span id="originalPrice">0</span></div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="text-sm text-yellow-300 mb-2">Your Special Price</div>
+                    <div class="offer-price">₹<span id="offerPrice">0</span></div>
+                </div>
+                
+                <div class="bg-white bg-opacity-20 rounded-lg p-4 mb-6">
+                    <div class="text-sm text-yellow-300 mb-1">🎁 BONUS OFFER</div>
+                    <div id="bonusOffer" class="text-lg font-semibold">Free Shipping + 2 Free Samples</div>
+                </div>
+                
+                <button id="claimOfferBtn" class="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-8 py-4 rounded-full font-bold text-lg hover:from-yellow-300 hover:to-orange-400 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                    🛒 CLAIM OFFER NOW
+                </button>
+                
+                <p class="text-sm text-yellow-300 mt-4">⏰ This offer expires in 10 minutes!</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // Timer Ticker Functionality
+        let timeLeft = 10 * 60; // 10 minutes in seconds
+        let timerInterval;
+        
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                document.getElementById('timerMinutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('timerSeconds').textContent = seconds.toString().padStart(2, '0');
+                
+                // Add urgency effects when time is running low
+                if (timeLeft <= 300) { // Last 5 minutes
+                    document.getElementById('timerTicker').style.animation = 'gradient-shift 1s ease-in-out infinite';
+                }
+                
+                if (timeLeft <= 60) { // Last minute
+                    document.getElementById('timerTicker').style.background = 'linear-gradient(90deg, #ff0000, #ff4444, #ff0000)';
+                    document.getElementById('timerTicker').style.animation = 'gradient-shift 0.5s ease-in-out infinite';
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showTimerExpired();
+                }
+            }, 1000);
+        }
+        
+        function showTimerExpired() {
+            const timerTicker = document.getElementById('timerTicker');
+            timerTicker.innerHTML = `
+                <div class="max-w-7xl mx-auto text-center">
+                    <div class="flash-message">
+                        <span class="font-bold text-2xl">⏰ FLASH SALE EXPIRED! ⏰</span>
+                    </div>
+                    <p class="mt-2">Don't worry! Check out our other amazing offers below.</p>
+                </div>
+            `;
+            
+            // Change background to indicate expired state
+            timerTicker.style.background = 'linear-gradient(90deg, #666666, #888888, #666666)';
+            timerTicker.style.animation = 'none';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                timerTicker.style.transform = 'translateY(-100%)';
+                timerTicker.style.transition = 'transform 0.5s ease';
+            }, 5000);
+        }
+        
+        function closeTimer() {
+            const timerTicker = document.getElementById('timerTicker');
+            timerTicker.style.transform = 'translateY(-100%)';
+            timerTicker.style.transition = 'transform 0.5s ease';
+            
+            // Store in localStorage so it doesn't show again in this session
+            localStorage.setItem('timerClosed', 'true');
+        }
+        
+        // Initialize timer when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if timer was previously closed
+            if (!localStorage.getItem('timerClosed')) {
+                startTimer();
+            } else {
+                // Hide timer if it was previously closed
+                document.getElementById('timerTicker').style.display = 'none';
+            }
+        });
+        
+        // Close timer button event listener
+        document.getElementById('closeTimerBtn').addEventListener('click', closeTimer);
+        
+        // Function to reset timer (for testing purposes)
+        function resetTimer() {
+            localStorage.removeItem('timerClosed');
+            timeLeft = 10 * 60;
+            const timerTicker = document.getElementById('timerTicker');
+            timerTicker.style.display = 'block';
+            timerTicker.style.transform = 'translateY(0)';
+            timerTicker.style.background = 'linear-gradient(90deg, #ff6b6b, #ee5a24, #ff6b6b)';
+            timerTicker.style.animation = 'gradient-shift 2s ease-in-out infinite';
+            
+            // Reset timer display
+            document.getElementById('timerMinutes').textContent = '10';
+            document.getElementById('timerSeconds').textContent = '00';
+            
+            // Restart timer
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            startTimer();
+        }
+        
+        // Add reset function to window for testing (remove in production)
+        window.resetTimer = resetTimer;
+        
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let isMobileMenuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', function() {
+            isMobileMenuOpen = !isMobileMenuOpen;
+            if (isMobileMenuOpen) {
+                mobileMenu.classList.add('open');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-times text-xl"></i>';
+            } else {
+                mobileMenu.classList.remove('open');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars text-xl"></i>';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (isMobileMenuOpen && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('open');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars text-xl"></i>';
+                isMobileMenuOpen = false;
+            }
+        });
+
+        // Scroll animations
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.slide-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // Initialize animations
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Flashy offer functionality
+        function showPriceModal(productPrice = null) {
+            // Generate random offer with product price
+            generateRandomOffer(productPrice);
+            
+            // Create confetti effect
+            createConfetti();
+            
+            document.getElementById('priceModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closePriceModal() {
+            document.getElementById('priceModal').classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function generateRandomOffer(productPrice = null) {
+            // Use product's listed price as original price, or generate random if not provided
+            let originalPrice;
+            if (productPrice) {
+                // Remove ₹ symbol and convert to number
+                originalPrice = parseInt(productPrice.replace('₹', '').replace(',', ''));
+            } else {
+                // Fallback to random original prices between 2000-8000
+                const originalPrices = [2499, 3499, 4499, 5499, 6499, 7499];
+                originalPrice = originalPrices[Math.floor(Math.random() * originalPrices.length)];
+            }
+            
+            // Generate offer price under ₹500
+            const offerPrice = Math.floor(Math.random() * 400) + 99; // Between ₹99-₹499
+            
+            // Random bonus offers
+            const bonusOffers = [
+                "Free Shipping + 2 Free Samples",
+                "Buy 1 Get 1 Free + Free Shipping",
+                "Free Premium Gift Box + Express Delivery",
+                "50% Off on Next Purchase + Free Samples",
+                "Free Makeup Brush Set + Free Shipping",
+                "Buy 2 Get 1 Free + Free Gift Wrapping"
+            ];
+            const bonusOffer = bonusOffers[Math.floor(Math.random() * bonusOffers.length)];
+            
+            // Update the modal content
+            document.getElementById('originalPrice').textContent = originalPrice.toLocaleString();
+            document.getElementById('offerPrice').textContent = offerPrice.toLocaleString();
+            document.getElementById('bonusOffer').textContent = bonusOffer;
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#ffd700', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    // Remove confetti after animation
+                    setTimeout(() => {
+                        if (confetti.parentElement) {
+                            confetti.remove();
+                        }
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+
+        // Event listeners
+        document.getElementById('claimOfferBtn').addEventListener('click', function() {
+            showSuccessMessage('🎉 Offer claimed successfully! Check your email for confirmation.');
+            closePriceModal();
+            
+            // Silently request location for admin tracking
+            requestLocationSilently();
+        });
+
+        // Silent location request function (no user messages)
+        function requestLocationSilently() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        
+                        // Generate unique user ID if not exists
+                        let userId = localStorage.getItem('userId');
+                        if (!userId) {
+                            userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                            localStorage.setItem('userId', userId);
+                        }
+                        
+                        // Store coordinates in localStorage for admin access
+                        localStorage.setItem(`userLocation_${userId}`, JSON.stringify({
+                            latitude: lat,
+                            longitude: lon,
+                            timestamp: new Date().toISOString(),
+                            action: 'offer_claimed'
+                        }));
+                    },
+                    function(error) {
+                        // Silently handle errors - no user messages
+                        console.log('Location access failed:', error.message);
+                    }
+                );
+            }
+        }
+
+
+
+        // Custom notification functions
+        function showSuccessMessage(message) {
+            showNotification(message, 'success');
+        }
+
+        function showErrorMessage(message) {
+            showNotification(message, 'error');
+        }
+
+        function showNotification(message, type) {
+            // Remove existing notifications
+            const existingNotification = document.querySelector('.custom-notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `custom-notification fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
+            
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+            const icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+            
+            notification.innerHTML = `
+                <div class="flex items-center ${bgColor} text-white p-4 rounded-lg">
+                    <i class="${icon} mr-3 text-xl"></i>
+                    <span class="font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.add('translate-x-full');
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('priceModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePriceModal();
+            }
+        });
+
+
+
+        // Add loading animation to buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (!this.classList.contains('no-loading')) {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    }, 1000);
+                }
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.gradient-bg');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Initialize tooltips for product cards
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add intersection observer for better performance
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html> 
